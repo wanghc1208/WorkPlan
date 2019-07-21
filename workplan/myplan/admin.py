@@ -7,10 +7,12 @@ admin.site.register(QA)
 # admin.site.register(Group)
 admin.site.register(PlanType)
 admin.site.register(Plan)
-class UsersAdmin(admin.ModelAdmin):
-    # fields = ('username', 'password')
-    list_display = ("userName","password","userGroup")
-admin.site.register(Group)
+
+# class QAAdmin(admin.ModelAdmin):
+#     # fields = ('username', 'password')
+#     list_display = ("qaName","qapwd","userGroup")
+
+@admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
     # fields = ('username', 'password')
     list_display = ("groupId","groupName","addTime")

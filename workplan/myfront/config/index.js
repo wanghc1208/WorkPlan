@@ -11,6 +11,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},
+    proxy: {
+        "/api":{
+          target:"http://127.0.0.1:8000/",
+          changeOrigin: true  // 是否代理
+        }
+    },//设置代理,
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

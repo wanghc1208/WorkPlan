@@ -16,9 +16,9 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 class User(models.Model):
     name = models.CharField(max_length=128, unique=True,verbose_name='用户名')
-    password = models.CharField(max_length=256,verbose_name="密码")
+    password = models.CharField(null=True,max_length=128,verbose_name="密码")
     # group = models.ForeignKey(to="Group", on_delete=models.CASCADE, verbose_name="所属小组")
-    group = models.CharField(max_length=128, unique=True,verbose_name='所属小组')
+    group = models.CharField(max_length=128,verbose_name='所属小组')
     addTime = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
     # modifyTime = models.DateTimeField(auto_now_add=True, verbose_name="更新时间")
 
@@ -56,32 +56,33 @@ class PlanType(models.Model):
         verbose_name = "计划类型表"
         verbose_name_plural = verbose_name
 
-class PlanDate(models.Model):
-    #计划表时间表
-    uname = models.ForeignKey(to="User",on_delete=models.CASCADE,verbose_name="用户")
-    planTime = models.DateField(verbose_name="计划时间")
-    # planName = models.CharField(max_length=128, unique=True,verbose_name="计划内容")
-    # addTime = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
-    # modifyTime = models.DateTimeField(auto_now=True,verbose_name="更新时间")
-
-
-    def __str__(self):
-        return  '%s' %(self.planTime)
-    class Meta:
-        db_table = "PlanDate"
-        verbose_name="计划表时间表"
-        verbose_name_plural = verbose_name
+# class PlanDate(models.Model):
+#     #计划表时间表
+#     uname = models.ForeignKey(to="User",to_field="name",on_delete=models.CASCADE,verbose_name="用户")
+#     planTime = models.DateField(unique=True,verbose_name="计划时间")
+#     # planName = models.CharField(max_length=128, unique=True,verbose_name="计划内容")
+#     # addTime = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
+#     # modifyTime = models.DateTimeField(auto_now=True,verbose_name="更新时间")
+#
+#
+#     def __str__(self):
+#         return  '%s' %(self.planTime)
+#     class Meta:
+#         db_table = "PlanDate"
+#         verbose_name="计划表时间表"
+#         verbose_name_plural = verbose_name
 
 class Plan(models.Model):
     #计划表
-    planTime = models.ForeignKey(to="PlanDate",on_delete=models.CASCADE,verbose_name="计划时间")
-    moringPlanName = models.CharField(max_length=128,verbose_name="上午计划")
-    afternoonPlanName = models.CharField(max_length=128, verbose_name="下午计划")
-
+    # planTime = models.ForeignKey(to="PlanDate",to_field="planTime",on_delete=models.CASCADE,verbose_name="计划时间")
+    uname = models.ForeignKey(to="User",to_field="name",on_delete=models.CASCADE,verbose_name="用户")
+    planTime = models.DateField(verbose_name="计划时间")
+    PlanName = models.CharField(max_length=128,null=True,verbose_name="计划内容")
 
     def __str__(self):
-        return  '%s_%s' %(self.moringPlanName,self.afternoonPlanName)
+        return  self.PlanName
     class Meta:
+        unique_together = ('uname', 'planTime',)
         db_table = "Plan"
         verbose_name="计划内容表"
         verbose_name_plural = verbose_name

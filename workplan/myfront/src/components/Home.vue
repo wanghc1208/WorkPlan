@@ -1,4 +1,5 @@
 <template>
+
   <el-table
     :data="tableData"
     height
@@ -24,6 +25,7 @@
       </el-table-column>
     </el-table-column>
   </el-table>
+
 </template>
 
 <script>
@@ -40,13 +42,24 @@
             // morning: ["测试1", '测试2'],
             // afternoon: ["测试3", '测试4']
             list: [3, 5, 1, 2, 6, 3, 4, 5, 7, 8, 9, 5, 4, 1, 2, 3, 6, 5, 4, 1]
-
           },
 
         ]
       }
     },
     methods: {
+      show(){
+            axios.Get({
+                url: '/plan/showplan/',
+                params: {
+                },
+                callback: (res) => {
+                    console.log(res);
+                    let data = res.data;
+                    console.log(data) ;
+                }
+            })
+      },
       change_days() {
         let that = this;
         that.base_title = [];

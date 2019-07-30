@@ -1,14 +1,11 @@
 from django.contrib import admin
 
 # Register your models here.
-from myplan.models import User, Group, PlanType, Plan, PlanDate
+from myplan.models import User, Group, PlanType, Plan
 
 
 admin.site.register(PlanType)
 # admin.site.register(PlanData)
-@admin.register(PlanDate)
-class PlanDateAdmin(admin.ModelAdmin):
-    list_display = ("uname","planTime")
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -20,4 +17,4 @@ class GroupAdmin(admin.ModelAdmin):
 
 @admin.register(Plan)
 class PlanAdmin(admin.ModelAdmin):
-    list_display = ("planTime","moringPlanName","afternoonPlanName")
+    list_display = ("uname","planTime","PlanName")

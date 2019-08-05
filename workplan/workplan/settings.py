@@ -67,8 +67,8 @@ ROOT_URLCONF = 'workplan.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        # 'DIRS': ['myfront/dist'],
+        # 'DIRS': [],
+        'DIRS': ['myfront/dist'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,6 +80,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'workplan.wsgi.application'
 

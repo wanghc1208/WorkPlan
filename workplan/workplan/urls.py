@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('plan/',include('myplan.urls')),
     path('api-token-auth/', views.obtain_auth_token),
-    # path(r'', TemplateView.as_view(template_name="index.html")
+    path(r'', TemplateView.as_view(template_name="index.html")),
 ]

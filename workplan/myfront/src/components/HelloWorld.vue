@@ -9,7 +9,8 @@
       <el-button type="info">信息按钮</el-button>
       <el-button type="warning">警告按钮</el-button>
       <el-button type="danger">危险按钮</el-button>
-      <el-button value="click me" @click.native="getdata()">click me</el-button>
+      <el-button value="click me" @click.native="getData">click me</el-button>
+      <span>{{testData}}</span>
 
     </el-row>
     <br/>
@@ -35,6 +36,7 @@
     name: 'HelloWorld',
     data() {
       return {
+        testData: [],
         list: [],
         msg: 'Welcome to Your Vue.js App',
         pickerOptions: {
@@ -67,24 +69,19 @@
         value1: '',
         value2: ''
       };
-
+    },
+    created() {
+      this.getData()
     },
     methods() {
-      function getdata() {
-        {
-          let that = this
-          that.$axios({
-            method: "get",//指定请求方式
-            url: "/showplan",//请求接口（相对接口，后面会介绍到）
-            data: {}
-          })
-            .then(function (res) {
-              console.log(res)
-            })
-            .catch(function (err) {
-              console.log(err)
-            })
-        }
+      getData()
+      {
+        this.$http.get('/plan/showplan').then(response => {
+          this.testData = response.data.body
+          console.log(response.data.body)
+        }).catch(error => {
+          console.log(error)
+        })
       }
     }
   }

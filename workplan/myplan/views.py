@@ -1,5 +1,6 @@
 
 from django.contrib import auth
+from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 import json
@@ -65,13 +66,24 @@ def show_plan(request):
     response1 = {}
     if request.method == 'GET':
         try:
-            user = models.User.objects.filter(name='wanghc')
-            objs = models.Plan.objects.filter(planTime__gte='2019-07-26',planTime__lte='2019-07-31').order_by('-planTime')
-            plan = json.loads(serializers.serialize("json", objs))
-            response['user'] = json.loads(serializers.serialize("json", user))
-            response['plan'] = json.loads(serializers.serialize("json", objs))
-            print(response)
-            response['success'] = 'true'
+            users = models.User.objects.all()
+            users1 = models.User.objects.filter(name='wanghc')
+            user_list = []
+            for u in users:
+                user_dict = {}
+                user_dict["name"] = u.name
+                user_dict["group"] = u.group
+                user_dict["addTime"] = u.addTime
+                user_list.append(user_dict)
+            # plans = models.Plan.objects.filter(planTime__gte='2019-07-26',planTime__lte='2019-07-31').order_by('-planTime')
+            # print(plans)
+            plans = models.Plan.objects.values('uname','planTime','PlanName').filter(uname='wanghc')
+            plans = models.Plan.objects.values('uname', 'planTime', 'PlanName').filter(Q(uname='wanghc'),Q(planTime__gte='2019-07-26'),Q(planTime__lte='2019-07-31'))
+            print(plans)
+            # response['user'] = json.loads(serializers.serialize("json", users))
+            response['user'] = user_list
+            response['plan'] = list(plans)
+            response['msg'] = 'ok'
             response['code'] = 0
         except  Exception as e:
             response['msg'] = str(e)

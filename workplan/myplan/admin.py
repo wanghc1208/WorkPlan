@@ -5,7 +5,6 @@ from myplan.models import User, Group, PlanType, Plan
 
 
 admin.site.register(PlanType)
-# admin.site.register(PlanData)
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):

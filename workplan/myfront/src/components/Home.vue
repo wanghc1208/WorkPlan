@@ -6,21 +6,23 @@
     style="width: 100%">
     <el-table-column prop="group" label="小组" width="120"></el-table-column>
     <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-    <el-table-column :label=title[key] v-for="(item,key) in title" :key="key">
-      <el-table-column
-        prop="morning"
-        label="上午"
-        width="120">
-        <template slot-scope="scope">
-          {{scope.row[key*3]}}
+
+    <el-table-column :label=data.time v-for=" data in tableData" :key="key">
+      <el-table-column prop="planname" label="上午" width="120">
+        <template slot-scope="scope" >
+          {{scope.row.planname.split("@@@")[0]}}
+          <!--{{tableData[scope.$index][i]}}-->
+          <!--{{tableData[scope.$index][i].planname.split("@@@")[0]}}-->
         </template>
       </el-table-column>
       <el-table-column
-        prop="afternoon"
+        prop="planname"
         label="下午"
         width="120">
         <template slot-scope="scope">
-          {{scope.row[key*3+1]}}
+          {{scope.row.planname.split("@@@")[1]}}
+          <!--{{tableData[scope.$index][i]}}-->
+          <!--{{tableData[scope.$index][i].row.planname.split("@@@")[1]}}-->
         </template>
       </el-table-column>
     </el-table-column>
@@ -33,32 +35,48 @@
     name: "Home",
     data() {
       return {
-        title: ["周一", "周二", "周三", "周四"],
+        tableHeader: ["2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11"],
         tableData: [
           {
             group: '错题本',
             name: '王小虎',
-            // data:[{morning: "测试1", afternoon: '测试2'},{morning: "测试3", afternoon: '测试4'}]
-            // morning: ["测试1", '测试2'],
-            // afternoon: ["测试3", '测试4']
-            list: [3, 5, 1, 2, 6, 3, 4, 5, 7, 8, 9, 5, 4, 1, 2, 3, 6, 5, 4, 1]
+            list:[{date:"2018-09-08",planname:"测试1@@@测试2"},{date:"2018-09-08",planname:"测试3@@@测试4"}]
+            // time: "2018-09-08",
+            // planname: "测试1@@@测试2"
           },
+          // {
+          //   group: '错题本',
+          //   name: '王小虎',
+          //   time: "2018-09-09",
+          //   planname: "测试3@@@测试4"
+          // },
+          // {
+          //   group: '错题本',
+          //   name: '王小虎',
+          //   time: "2018-09-09",
+          //   planname: "测试5@@@测试6"
+          // },
+          // {
+          //   group: '错题本',
+          //   name: '王小虎',
+          //   time: "2018-09-09",
+          //   planname: "测试7@@@测试8"
+          // },
 
         ]
       }
     },
     methods: {
-      show(){
-            axios.Get({
-                url: '/plan/showplan/',
-                params: {
-                },
-                callback: (res) => {
-                    console.log(res);
-                    let data = res.data;
-                    console.log(data) ;
-                }
-            })
+      show() {
+        axios.Get({
+          url: '/plan/showplan/',
+          params: {},
+          callback: (res) => {
+            console.log(res);
+            let data = res.data;
+            console.log(data);
+          }
+        })
       },
       change_days() {
         let that = this;

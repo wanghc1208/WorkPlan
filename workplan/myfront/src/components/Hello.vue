@@ -1,33 +1,38 @@
-<template >
+<template>
   <el-button value="click me" @click.native="getData">click me</el-button>
-  <p>welecome you  come here!</p>
-  <span>{{testData}}</span>
-
-  <!--<el-tag>{{ getData }}</el-tag>-->
+  <!--<h1>welecome you come here!</h1>-->
+  <!--<h2>{{testData}}</h2>-->
 
 </template>
 
 <script>
-export default{
-  data () {
-    return {
-      testData: []
-    }
-  },
-  created () {
-    this.getData()
-  },
-  methods: {
-    getData () {
-      this.$http.get('/plan/showplan').then(response => {
-        this.testData = response.data.body
-        console.log(response.data.body)
-      }).catch(error => {
-        console.log(error)
-      })
+  export default {
+    data() {
+      return {
+        testData: [],
+        // info: {
+        //   user: [],
+        //   plan: []
+        // },
+      }
+    },
+    created() {
+      this.getData()
+    },
+    methods: {
+      getData() {
+        this.$http.get('/plan/showplan').then(response => {
+
+          data = eval(response.data)
+          console.log(data)
+          this.testData = data
+          // this.info = data
+        }).catch(error => {
+          console.log(error)
+        })
+      }
     }
   }
-}
 </script>
 
 <style scoped>

@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2 v-for="i in list">测试的数据,{{i.planTime}}}</h2>
+    <h3>{{testData}}</h3>
     <el-row>
       <el-button>默认按钮</el-button>
       <el-button type="primary">主要按钮</el-button>
@@ -77,8 +78,8 @@
       getData()
       {
         this.$http.get('/plan/showplan').then(response => {
-          this.testData = response.data.body
-          console.log(response.data.body)
+          this.testData = response.data
+          console.log(response.data)
         }).catch(error => {
           console.log(error)
         })
